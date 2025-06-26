@@ -32,6 +32,15 @@ CREATE TABLE `cliente` (
   CONSTRAINT `FK_dni_cliente` FOREIGN KEY (`dni`) REFERENCES `persona` (`dni`) ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `rodado`;
+CREATE TABLE rodado (
+  patente VARCHAR(10) PRIMARY KEY,
+  marca VARCHAR(50),
+  modelo VARCHAR(50),
+  anio INT,
+  cod_cliente VARCHAR(20),
+  FOREIGN KEY (cod_cliente) REFERENCES cliente(cod_cliente) ON DELETE CASCADE
+);
 
 --
 -- Dumping data for table `cliente`
@@ -84,6 +93,16 @@ CREATE TABLE `persona` (
   PRIMARY KEY (`dni`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE ficha_tecnica (
+    nro_ficha INT PRIMARY KEY,
+    cod_cliente VARCHAR(20),
+    vehiculo VARCHAR(12),
+    subtotal FLOAT,
+    mano_obra FLOAT,
+    total_general FLOAT,
+    FOREIGN KEY (cod_cliente) REFERENCES cliente(cod_cliente),
+    FOREIGN KEY (vehiculo) REFERENCES rodado(patente)
+);
 
 --
 -- Dumping data for table `persona`
